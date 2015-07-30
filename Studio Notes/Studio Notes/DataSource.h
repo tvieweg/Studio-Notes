@@ -20,6 +20,7 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
-- (void)insertNewObject:(id)sender; 
+- (void)insertNewObject:(id)sender;
+- (void)insertNewObjectWithTitle:(NSString *)title bpm:(NSString *)bpm key:(NSString *)key lyrics:(NSString *)lyrics productionNotes:(NSString *)productionNotes; 
 
 @end

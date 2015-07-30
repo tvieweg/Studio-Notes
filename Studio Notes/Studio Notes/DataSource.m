@@ -26,7 +26,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (NSURL *)applicationDocumentsDirectory {
-    // The directory the application uses to store the Core Data store file. This code uses a directory named "com.trevorvieweg.Studio_Notes" in the application's documents directory.
+    // The directory the application uses to store the Core Data store file. This code uses an app group. 
     return [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.studionotes"];
 
 }
@@ -36,6 +36,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
+    
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Studio_Notes" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
@@ -120,5 +121,31 @@
         abort();
     }
 }
+
+- (void)insertNewObjectWithTitle:(NSString *)title bpm:(NSString *)bpm key:(NSString *)key lyrics:(NSString *)lyrics productionNotes:(NSString *)productionNotes {
+    
+    NSManagedObjectContext *context = self.managedObjectContext;
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Note"inManagedObjectContext:context];
+    
+    // If appropriate, configure the new managed object.
+    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+    [newManagedObject setValue:[NSDate date] forKey:@"dateModified"];
+    [newManagedObject setValue:title forKey:@"title"];
+    [newManagedObject setValue:bpm forKey:@"bpm"];
+    [newManagedObject setValue:key forKey:@"key"];
+    [newManagedObject setValue:lyrics forKey:@"lyrics"];
+    [newManagedObject setValue:productionNotes forKey:@"productionNotes"]; 
+    
+    // Save the context.
+    NSError *error = nil;
+    if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+}
+
+
 
 @end

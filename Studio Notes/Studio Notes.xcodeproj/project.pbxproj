@@ -11,6 +11,7 @@
 		B14231011B69641F0059AEF7 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B14231001B69641F0059AEF7 /* ShareViewController.m */; };
 		B14231031B69642C0059AEF7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B14231021B69642C0059AEF7 /* MainInterface.storyboard */; };
 		B14231291B6A841A0059AEF7 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AF943C1B61498F002A1903 /* DataSource.m */; };
+		B19BFFAD1B6AC73F00AE61E8 /* Studio_Notes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1AF94161B61440E002A1903 /* Studio_Notes.xcdatamodeld */; };
 		B1AF94121B61440E002A1903 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AF94111B61440E002A1903 /* main.m */; };
 		B1AF94151B61440E002A1903 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AF94141B61440E002A1903 /* AppDelegate.m */; };
 		B1AF94181B61440E002A1903 /* Studio_Notes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1AF94161B61440E002A1903 /* Studio_Notes.xcdatamodeld */; };
@@ -137,12 +138,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B19BFFAE1B6ACD0300AE61E8 /* Shared DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				B1AF943B1B61498F002A1903 /* DataSource.h */,
+				B1AF943C1B61498F002A1903 /* DataSource.m */,
+			);
+			name = "Shared DataSource";
+			path = "Studio Notes";
+			sourceTree = "<group>";
+		};
 		B1AF94031B61440E002A1903 = {
 			isa = PBXGroup;
 			children = (
+				B19BFFAE1B6ACD0300AE61E8 /* Shared DataSource */,
 				B1AF940E1B61440E002A1903 /* Studio Notes */,
-				B1AF942E1B61440E002A1903 /* Studio NotesTests */,
 				B14230EF1B6963940059AEF7 /* Share Extension */,
+				B1AF942E1B61440E002A1903 /* Studio NotesTests */,
 				B1AF940D1B61440E002A1903 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -163,8 +175,6 @@
 				B14230E91B6963800059AEF7 /* Studio Notes.entitlements */,
 				B1AF94131B61440E002A1903 /* AppDelegate.h */,
 				B1AF94141B61440E002A1903 /* AppDelegate.m */,
-				B1AF943B1B61498F002A1903 /* DataSource.h */,
-				B1AF943C1B61498F002A1903 /* DataSource.m */,
 				B1AF94191B61440E002A1903 /* MasterViewController.h */,
 				B1AF941A1B61440E002A1903 /* MasterViewController.m */,
 				B1AF941C1B61440E002A1903 /* DetailViewController.h */,
@@ -349,6 +359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B14231291B6A841A0059AEF7 /* DataSource.m in Sources */,
+				B19BFFAD1B6AC73F00AE61E8 /* Studio_Notes.xcdatamodeld in Sources */,
 				B14231011B69641F0059AEF7 /* ShareViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -587,6 +598,7 @@
 				B14230FC1B6963940059AEF7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B1AF94071B61440E002A1903 /* Build configuration list for PBXProject "Studio Notes" */ = {
 			isa = XCConfigurationList;
