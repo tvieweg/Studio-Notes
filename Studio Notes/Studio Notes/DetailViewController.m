@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "DataSource.h"
 
 @interface DetailViewController () <UITextViewDelegate>
 
@@ -84,8 +85,7 @@
     [self.detailItem setValue:self.songKeyTextField.text forKey:@"key"];
     [self.detailItem setValue:self.lyricTextView.text forKey:@"lyrics"];
     
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-    [delegate saveContext];
+    [[DataSource sharedInstance] saveContext];
 
 }
 

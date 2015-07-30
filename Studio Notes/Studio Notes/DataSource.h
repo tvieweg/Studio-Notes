@@ -7,7 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 @interface DataSource : NSObject
+
+
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
++ (instancetype) sharedInstance;
+
+- (void)saveContext;
+- (NSURL *)applicationDocumentsDirectory;
+- (void)insertNewObject:(id)sender; 
 
 @end
