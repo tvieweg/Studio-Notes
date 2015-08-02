@@ -28,10 +28,11 @@
             if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
                 [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(NSURL *url, NSError *error) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-
                         [[DataSource sharedInstance] insertNewObjectWithTitle:self.contentText bpm:nil key:nil lyrics:nil productionNotes:[url absoluteString]];
                     });
                 }];
+            } else {
+                [[DataSource sharedInstance] insertNewObjectWithTitle:self.contentText bpm:nil key:nil lyrics:nil productionNotes:nil]; 
             }
         }
     }
