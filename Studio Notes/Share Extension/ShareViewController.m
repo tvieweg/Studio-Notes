@@ -8,6 +8,7 @@
 
 #import "ShareViewController.h"
 #import "DataSource.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
 @interface ShareViewController ()
 
@@ -22,12 +23,19 @@
 
 - (void)didSelectPost {
     // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
+    for (NSExtensionItem *item in self.extensionContext.inputItems) {
+        for (NSItemProvider *itemProvider in item.attachments) {
+            if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
+                [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(NSURL *url, NSError *error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+
+                        [[DataSource sharedInstance] insertNewObjectWithTitle:self.contentText bpm:nil key:nil lyrics:nil productionNotes:[url absoluteString]];
+                    });
+                }];
+            }
+        }
+    }
     
-    // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
-    //[DataSource sharedInstance].managedObjectContext.stalenessInterval = 0.0;
-    
-    [[DataSource sharedInstance] insertNewObjectWithTitle:@"New Song From Safari" bpm:nil key:nil lyrics:nil productionNotes:nil]; 
-    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
 }
 
 - (NSArray *)configurationItems {
