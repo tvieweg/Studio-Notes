@@ -144,6 +144,18 @@
                           type:NSContainsPredicateOperatorType
                           options:NSCaseInsensitivePredicateOption];
         [searchItemsPredicate addObject:finalPredicate];
+        
+        // lyrics matching
+        lhs = [NSExpression expressionForKeyPath:@"lyrics"];
+        rhs = [NSExpression expressionForConstantValue:searchString];
+        finalPredicate = [NSComparisonPredicate
+                          predicateWithLeftExpression:lhs
+                          rightExpression:rhs
+                          modifier:NSDirectPredicateModifier
+                          type:NSContainsPredicateOperatorType
+                          options:NSCaseInsensitivePredicateOption];
+        [searchItemsPredicate addObject:finalPredicate];
+
 
         
         //BPM field matching
