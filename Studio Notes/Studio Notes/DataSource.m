@@ -122,7 +122,7 @@
     }
 }
 
-- (void)insertNewObjectWithTitle:(NSString *)title bpm:(NSString *)bpm key:(NSString *)key lyrics:(NSString *)lyrics productionNotes:(NSString *)productionNotes {
+- (void)insertNewObjectWithTitle:(NSString *)title bpm:(NSString *)bpm key:(NSString *)key productionNotes:(NSString *)productionNotes {
     
     NSManagedObjectContext *context = self.managedObjectContext;
     NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Note"inManagedObjectContext:context];
@@ -133,7 +133,6 @@
     [newManagedObject setValue:title forKey:@"title"];
     [newManagedObject setValue:bpm forKey:@"bpm"];
     [newManagedObject setValue:key forKey:@"key"];
-    [newManagedObject setValue:lyrics forKey:@"lyrics"];
     [newManagedObject setValue:productionNotes forKey:@"productionNotes"]; 
     
     // Save the context.
