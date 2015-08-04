@@ -9,14 +9,15 @@
 #import "DetailViewController.h"
 #import "DataSource.h"
 
-@interface DetailViewController () <UITextViewDelegate>
+@interface DetailViewController () <UITextViewDelegate, UIGestureRecognizerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextView *noteTextView;
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *bpmTextField;
 @property (weak, nonatomic) IBOutlet UITextField *songKeyTextField;
+
+@property (weak, nonatomic) IBOutlet UITextView *noteTextView;
 @property (weak, nonatomic) IBOutlet UITextView *lyricTextView;
-@property (weak, nonatomic) UITapGestureRecognizer *tap;
+
 @end
 
 @implementation DetailViewController
@@ -67,6 +68,20 @@
     // Do any additional setup after loading the view, typically from a nib.
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(didPressShareButton)];
     self.navigationItem.rightBarButtonItem = shareButton;
+    
+    UITapGestureRecognizer *noteTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(noteTextRecognizerTapped:)];
+    noteTapRecognizer.delegate = self;
+    [self.noteTextView addGestureRecognizer:noteTapRecognizer];
+    
+    UITapGestureRecognizer *lyricTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(lyricTextRecognizerTapped:)];
+    lyricTapRecognizer.delegate = self;
+    [self.lyricTextView addGestureRecognizer:lyricTapRecognizer];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDidFire)];
+    tap.delegate = self;
+    [self.view addGestureRecognizer:tap];
+
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,6 +102,24 @@
     
     [[DataSource sharedInstance] saveContext];
 
+}
+
+#pragma mark - Tap Gesture Recognizer Methods
+
+- (void) noteTextRecognizerTapped:(UITapGestureRecognizer *) aRecognizer {
+    self.noteTextView.dataDetectorTypes = UIDataDetectorTypeNone;
+    self.noteTextView.editable = YES;
+    [self.noteTextView becomeFirstResponder];
+}
+
+- (void) lyricTextRecognizerTapped:(UITapGestureRecognizer *) aRecognizer {
+    self.lyricTextView.dataDetectorTypes = UIDataDetectorTypeNone;
+    self.lyricTextView.editable = YES;
+    [self.lyricTextView becomeFirstResponder];
+}
+
+- (void) tapDidFire {
+    [self.view endEditing:YES];
 }
 
 #pragma mark - UITextView Delegate
@@ -111,6 +144,9 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
+    textView.editable = NO;
+    textView.dataDetectorTypes = UIDataDetectorTypeAll;
+
     if (textView == self.noteTextView) {
         if ([textView.text isEqualToString:@""]) {
             textView.text = @"Add production notes here";
