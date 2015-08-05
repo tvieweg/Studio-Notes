@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "DataSource.h"
 
 @interface DetailViewController () <UITextViewDelegate>
 
@@ -64,7 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Shared" style:UIBarButtonItemStylePlain target:self action:@selector(didPressShareButton)];
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(didPressShareButton)];
     self.navigationItem.rightBarButtonItem = shareButton;
 }
 
@@ -84,8 +85,7 @@
     [self.detailItem setValue:self.songKeyTextField.text forKey:@"key"];
     [self.detailItem setValue:self.lyricTextView.text forKey:@"lyrics"];
     
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-    [delegate saveContext];
+    [[DataSource sharedInstance] saveContext];
 
 }
 
