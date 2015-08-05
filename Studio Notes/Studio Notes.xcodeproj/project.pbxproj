@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B123B9C81B6FD910008793DF /* ResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B123B9C71B6FD910008793DF /* ResultsTableViewController.m */; };
+		B123B9CA1B6FF2EE008793DF /* TableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B123B9C91B6FF2EE008793DF /* TableCell.xib */; };
+		B123B9CD1B700733008793DF /* StudioNotesSongTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B123B9CC1B700733008793DF /* StudioNotesSongTableViewCell.m */; };
 		B14230F91B6963940059AEF7 /* Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B14230EE1B6963940059AEF7 /* Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B14231011B69641F0059AEF7 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B14231001B69641F0059AEF7 /* ShareViewController.m */; };
 		B14231031B69642C0059AEF7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B14231021B69642C0059AEF7 /* MainInterface.storyboard */; };
@@ -66,6 +69,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B123B9C61B6FD910008793DF /* ResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsTableViewController.h; sourceTree = "<group>"; };
+		B123B9C71B6FD910008793DF /* ResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsTableViewController.m; sourceTree = "<group>"; };
+		B123B9C91B6FF2EE008793DF /* TableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableCell.xib; sourceTree = "<group>"; };
+		B123B9CB1B700733008793DF /* StudioNotesSongTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudioNotesSongTableViewCell.h; sourceTree = "<group>"; };
+		B123B9CC1B700733008793DF /* StudioNotesSongTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudioNotesSongTableViewCell.m; sourceTree = "<group>"; };
 		B14230E91B6963800059AEF7 /* Studio Notes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Studio Notes.entitlements"; sourceTree = "<group>"; };
 		B14230EE1B6963940059AEF7 /* Share Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Share Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B14230F11B6963940059AEF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -177,10 +185,15 @@
 				B1AF94141B61440E002A1903 /* AppDelegate.m */,
 				B1AF94191B61440E002A1903 /* MasterViewController.h */,
 				B1AF941A1B61440E002A1903 /* MasterViewController.m */,
+				B123B9C61B6FD910008793DF /* ResultsTableViewController.h */,
+				B123B9C71B6FD910008793DF /* ResultsTableViewController.m */,
 				B1AF941C1B61440E002A1903 /* DetailViewController.h */,
 				B1AF941D1B61440E002A1903 /* DetailViewController.m */,
 				B1AF941F1B61440E002A1903 /* Main.storyboard */,
+				B123B9CB1B700733008793DF /* StudioNotesSongTableViewCell.h */,
+				B123B9CC1B700733008793DF /* StudioNotesSongTableViewCell.m */,
 				B1AF94221B61440E002A1903 /* Images.xcassets */,
+				B123B9C91B6FF2EE008793DF /* TableCell.xib */,
 				B1AF94241B61440E002A1903 /* LaunchScreen.xib */,
 				B1AF94161B61440E002A1903 /* Studio_Notes.xcdatamodeld */,
 				B1AF940F1B61440E002A1903 /* Supporting Files */,
@@ -340,6 +353,7 @@
 			files = (
 				B1AF94211B61440E002A1903 /* Main.storyboard in Resources */,
 				B1AF94261B61440E002A1903 /* LaunchScreen.xib in Resources */,
+				B123B9CA1B6FF2EE008793DF /* TableCell.xib in Resources */,
 				B1AF94231B61440E002A1903 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,8 +383,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1AF941E1B61440E002A1903 /* DetailViewController.m in Sources */,
+				B123B9C81B6FD910008793DF /* ResultsTableViewController.m in Sources */,
 				B1AF941B1B61440E002A1903 /* MasterViewController.m in Sources */,
 				B1AF943D1B61498F002A1903 /* DataSource.m in Sources */,
+				B123B9CD1B700733008793DF /* StudioNotesSongTableViewCell.m in Sources */,
 				B1AF94151B61440E002A1903 /* AppDelegate.m in Sources */,
 				B1AF94181B61440E002A1903 /* Studio_Notes.xcdatamodeld in Sources */,
 				B1AF94121B61440E002A1903 /* main.m in Sources */,
