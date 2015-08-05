@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H1p-Uh-vWS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Master-->
@@ -34,45 +33,28 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zda-ib-r0T">
                                 <rect key="frame" x="252" y="94" width="97" height="30"/>
+                                <color key="tintColor" red="0.99327771740000004" green="1" blue="0.97949140069999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.99209377590919534" green="1" blue="0.977789395767103" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Add notes here" translatesAutoresizingMaskIntoConstraints="NO" id="u7o-aG-Lqk">
-                                <rect key="frame" x="0.0" y="249" width="600" height="172"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
-                            </textView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BPM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OlN-84-hsz">
                                 <rect key="frame" x="252" y="144" width="97" height="30"/>
+                                <color key="textColor" red="0.99327771740000004" green="1" blue="0.97949140069999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Key" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Xe-CF-8tM">
                                 <rect key="frame" x="252" y="188" width="97" height="30"/>
+                                <color key="textColor" red="0.99327771740000004" green="1" blue="0.97949140069999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Lyrics go here" translatesAutoresizingMaskIntoConstraints="NO" id="R9f-2Y-CvN">
-                                <rect key="frame" x="0.0" y="423" width="600" height="177"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
-                            </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.3921568627" green="0.3921568627" blue="0.47058823529999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="R9f-2Y-CvN" secondAttribute="centerX" id="4aB-mN-Yc7"/>
-                            <constraint firstAttribute="centerX" secondItem="u7o-aG-Lqk" secondAttribute="centerX" id="HF1-g0-Eg0"/>
                             <constraint firstAttribute="centerX" secondItem="3Xe-CF-8tM" secondAttribute="centerX" id="Qvm-Dn-6sg"/>
-                            <constraint firstItem="u7o-aG-Lqk" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="-16" id="SMP-60-saf"/>
                             <constraint firstAttribute="centerX" secondItem="OlN-84-hsz" secondAttribute="centerX" id="cHy-zE-nsB"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="R9f-2Y-CvN" secondAttribute="trailing" constant="-16" id="cjY-CS-cQj"/>
-                            <constraint firstItem="R9f-2Y-CvN" firstAttribute="top" secondItem="u7o-aG-Lqk" secondAttribute="bottom" constant="2" id="cvw-ps-T0C"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="u7o-aG-Lqk" secondAttribute="trailing" constant="-16" id="tvk-tR-mlX"/>
-                            <constraint firstItem="R9f-2Y-CvN" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="-16" id="ucY-Yn-O9r"/>
                             <constraint firstAttribute="centerX" secondItem="zda-ib-r0T" secondAttribute="centerX" id="zHa-aG-b4S"/>
                         </constraints>
                     </view>
@@ -80,8 +62,6 @@
                     <navigationItem key="navigationItem" title="Song" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="bpmTextField" destination="OlN-84-hsz" id="RpE-5x-tYZ"/>
-                        <outlet property="lyricTextView" destination="R9f-2Y-CvN" id="YSC-uf-nF5"/>
-                        <outlet property="noteTextView" destination="u7o-aG-Lqk" id="2tS-kO-Scw"/>
                         <outlet property="songKeyTextField" destination="3Xe-CF-8tM" id="Oep-j6-eCJ"/>
                         <outlet property="titleTextField" destination="zda-ib-r0T" id="8c4-KN-5i8"/>
                     </connections>
