@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *bpmTextField;
 @property (weak, nonatomic) IBOutlet UITextField *songKeyTextField;
 @property (weak, nonatomic) IBOutlet UITextView *lyricTextView;
+@property (weak, nonatomic) UITapGestureRecognizer *tap;
 @end
 
 @implementation DetailViewController
@@ -54,13 +55,17 @@
     [super viewWillAppear:YES];
     [self configureView];
     self.noteTextView.delegate = self;
-    self.lyricTextView.delegate = self; 
+    self.lyricTextView.delegate = self;
+    self.noteTextView.dataDetectorTypes = UIDataDetectorTypeAll;
+    self.lyricTextView.dataDetectorTypes = UIDataDetectorTypeAll; 
 
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Shared" style:UIBarButtonItemStylePlain target:self action:@selector(didPressShareButton)];
+    self.navigationItem.rightBarButtonItem = shareButton;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,6 +125,35 @@
         [textView resignFirstResponder];
     }
     
+}
+
+#pragma mark - Sharing
+
+- (void) didPressShareButton {
+    NSMutableArray *itemsToShare = [NSMutableArray array];
+    
+    [itemsToShare addObject:self.titleTextField.text];
+    
+    if (self.bpmTextField.text.length > 0) {
+        [itemsToShare addObject:self.bpmTextField.text];
+    }
+    
+    if (self.songKeyTextField.text.length > 0) {
+        [itemsToShare addObject:self.songKeyTextField.text];
+    }
+    
+    if (![self.noteTextView.text isEqualToString:@"Add production notes here"]) {
+        [itemsToShare addObject:self.noteTextView.text];
+    }
+    
+    if (![self.lyricTextView.text isEqualToString:@"Add lyrics here"]) {
+        [itemsToShare addObject:self.lyricTextView.text];
+    }
+    
+    if (itemsToShare.count > 0) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+        [self presentViewController:activityVC animated:YES completion:nil];
+    }
 }
 
 @end
