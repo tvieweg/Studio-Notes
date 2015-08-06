@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B115D0091B73FC68009D010E /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B115D0081B73FC68009D010E /* CloudKit.framework */; };
 		B123B9C81B6FD910008793DF /* ResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B123B9C71B6FD910008793DF /* ResultsTableViewController.m */; };
 		B123B9CD1B700733008793DF /* StudioNotesSongTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B123B9CC1B700733008793DF /* StudioNotesSongTableViewCell.m */; };
 		B14230F91B6963940059AEF7 /* Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B14230EE1B6963940059AEF7 /* Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -68,6 +69,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B115D0081B73FC68009D010E /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B123B9C61B6FD910008793DF /* ResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsTableViewController.h; sourceTree = "<group>"; };
 		B123B9C71B6FD910008793DF /* ResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsTableViewController.m; sourceTree = "<group>"; };
 		B123B9CB1B700733008793DF /* StudioNotesSongTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudioNotesSongTableViewCell.h; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B115D0091B73FC68009D010E /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +160,7 @@
 		B1AF94031B61440E002A1903 = {
 			isa = PBXGroup;
 			children = (
+				B115D0081B73FC68009D010E /* CloudKit.framework */,
 				B19BFFAE1B6ACD0300AE61E8 /* Shared DataSource */,
 				B1AF940E1B61440E002A1903 /* Studio Notes */,
 				B14230EF1B6963940059AEF7 /* Share Extension */,
@@ -305,6 +309,9 @@
 						DevelopmentTeam = WGAN99Y3T7;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};
@@ -547,10 +554,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Studio Notes/Studio Notes.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Studio Notes/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -559,10 +569,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Studio Notes/Studio Notes.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Studio Notes/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

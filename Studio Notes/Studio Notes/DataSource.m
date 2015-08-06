@@ -19,6 +19,7 @@
     
     return sharedInstance;
 }
+
 #pragma mark - Core Data stack
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -44,17 +45,40 @@
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it.
-    if (_persistentStoreCoordinator != nil) {
+    if (_persistentStoreCoordinator != nil)
+    {
         return _persistentStoreCoordinator;
     }
     
     // Create the coordinator and store
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    _persistentStoreCoordinator = [self setPersistentStore];
+    
+    return _persistentStoreCoordinator;
+
+}
+
+- (NSPersistentStoreCoordinator *)setPersistentStore {
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption,
+                             nil];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"iCloudSetting"] == YES)
+    {
+        NSMutableDictionary *addiCloud = [NSMutableDictionary dictionaryWithDictionary:options];
+        [addiCloud setObject:[NSString stringWithFormat:@"StudioNotesCloudStore"] forKey:NSPersistentStoreUbiquitousContentNameKey];
+        options = addiCloud;
+    }
     
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Studio_Notes.sqlite"];
+    NSURL *storeURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.studionotes"];
+    storeURL = [storeURL URLByAppendingPathComponent:@"Studio_Notes.sqlite"];
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error])
+    {
         // Report any error we got.
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
@@ -67,9 +91,10 @@
         abort();
     }
     
+    NSLog(@"PS: %@", _persistentStoreCoordinator);
     return _persistentStoreCoordinator;
+    
 }
-
 
 - (NSManagedObjectContext *)managedObjectContext {
     // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
@@ -79,10 +104,15 @@
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (!coordinator) {
+        
         return nil;
+        
+    } else {
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+        [self observeCloudActions:coordinator];
     }
-    _managedObjectContext = [[NSManagedObjectContext alloc] init];
-    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    
     return _managedObjectContext;
 }
 
@@ -144,6 +174,64 @@
         abort();
     }
 }
+
+#pragma mark - iCloud Core Data Notification Methods
+
+- (void)observeCloudActions:(NSPersistentStoreCoordinator *)coordinator
+{
+    NSNotificationCenter *notifications = [NSNotificationCenter defaultCenter];
+    
+    [notifications addObserver:self
+                      selector:@selector(storesDidChange:)
+                          name:NSPersistentStoreCoordinatorStoresDidChangeNotification
+                        object:coordinator];
+    
+    [notifications addObserver:self
+                      selector:@selector(storesWillChange:)
+                          name:NSPersistentStoreCoordinatorStoresWillChangeNotification
+                        object:coordinator];
+    
+    [notifications addObserver:self
+                      selector:@selector(storesDidImportContent:)
+                          name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+                        object:coordinator];
+}
+
+- (void)storesWillChange:(NSNotification *)notification
+{
+    NSManagedObjectContext *context = self.managedObjectContext;
+    
+    [context performBlockAndWait:^{
+        if ([context hasChanges])
+        {
+            [self saveContext];
+        }
+        
+        [context reset];
+    }];
+    
+    self.iCloudConnectivityDidChange = YES;
+    
+}
+
+- (void)storesDidChange:(NSNotification *)notification
+{
+    self.iCloudConnectivityDidChange = YES;
+}
+
+- (void)storesDidImportContent:(NSNotification *)notification
+{
+    NSManagedObjectContext *context = self.managedObjectContext;
+    
+    [context performBlock:^{
+        NSLog(@"Importing content");
+        
+        [context mergeChangesFromContextDidSaveNotification:notification];
+    }];
+    
+    self.iCloudConnectivityDidChange = NO;
+}
+
 
 
 

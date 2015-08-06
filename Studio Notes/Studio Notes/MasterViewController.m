@@ -12,7 +12,7 @@
 #import "ResultsTableViewController.h"
 #import "StudioNotesSongTableViewCell.h"
 
-@interface MasterViewController () <UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
+@interface MasterViewController () <UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UISearchController *searchController;
 
@@ -24,8 +24,6 @@
 // for state restoration
 @property BOOL searchControllerWasActive;
 @property BOOL searchControllerSearchFieldWasFirstResponder;
-
-
 
 @end
 
@@ -41,6 +39,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    //iCloud setup.
+    [[DataSource sharedInstance] addObserver:self forKeyPath:@"iCloudConnectivityDidChange" options:0 context:nil];
+    
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
@@ -69,6 +71,29 @@
     self.definesPresentationContext = YES;  // know where you want UISearchController to be displayed
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"iCloudConnectivityDidChange"])
+    {
+        NSLog(@"iCloud connectivity changed - reloading data.");
+        [self reloadAllData];
+    }
+}
+
+- (void)reloadAllData
+{
+    self.fetchedResultsController = nil;
+    
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
+    [self.tableView reloadData];
+    
+    if (error)
+    {
+        NSLog(@"searchFetchRequest failed: %@", [error localizedDescription]);
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -84,6 +109,14 @@
     }
 }
 
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self name:NSUbiquityIdentityDidChangeNotification object:nil];
+}
+
+- (void) iCloudAccountAvailabilityChanged:(NSNotification *)notification {
+    
+}
 #pragma mark - Helper methods
 
 - (void)insertNewObject:(id)sender {
@@ -111,13 +144,6 @@
     NSMutableArray *andMatchPredicates = [NSMutableArray array];
     
     for (NSString *searchString in searchItems) {
-        // each searchString creates an OR predicate for: name, yearIntroduced, introPrice
-        //
-        // example if searchItems contains "iphone 599 2007":
-        //      name CONTAINS[c] "iphone"
-        //      name CONTAINS[c] "599", yearIntroduced ==[c] 599, introPrice ==[c] 599
-        //      name CONTAINS[c] "2007", yearIntroduced ==[c] 2007, introPrice ==[c] 2007
-        //
         NSMutableArray *searchItemsPredicate = [NSMutableArray array];
         
         // Below we use NSExpression represent expressions in our predicates.
@@ -303,8 +329,6 @@ NSString *const SearchBarIsFirstResponderKey = @"SearchBarIsFirstResponderKey";
 
 }
 
-
-
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -396,15 +420,5 @@ NSString *const SearchBarIsFirstResponderKey = @"SearchBarIsFirstResponderKey";
 {
     [self.tableView endUpdates];
 }
-
-/*
-// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    // In the simplest, most efficient, case, reload the table view.
-    [self.tableView reloadData];
-}
- */
 
 @end
