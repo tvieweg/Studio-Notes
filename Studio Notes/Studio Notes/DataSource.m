@@ -60,6 +60,8 @@
 
 - (NSPersistentStoreCoordinator *)setPersistentStore {
     
+    [self observeCloudActions];
+
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
                              [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption,
@@ -110,7 +112,6 @@
     } else {
         _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-        [self observeCloudActions:coordinator];
     }
     
     return _managedObjectContext;
@@ -177,24 +178,24 @@
 
 #pragma mark - iCloud Core Data Notification Methods
 
-- (void)observeCloudActions:(NSPersistentStoreCoordinator *)coordinator
+- (void)observeCloudActions
 {
     NSNotificationCenter *notifications = [NSNotificationCenter defaultCenter];
     
     [notifications addObserver:self
                       selector:@selector(storesDidChange:)
                           name:NSPersistentStoreCoordinatorStoresDidChangeNotification
-                        object:coordinator];
+                        object:nil];
     
     [notifications addObserver:self
                       selector:@selector(storesWillChange:)
                           name:NSPersistentStoreCoordinatorStoresWillChangeNotification
-                        object:coordinator];
+                        object:nil];
     
     [notifications addObserver:self
                       selector:@selector(storesDidImportContent:)
                           name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-                        object:coordinator];
+                        object:nil];
 }
 
 - (void)storesWillChange:(NSNotification *)notification
