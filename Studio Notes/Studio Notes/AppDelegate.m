@@ -101,7 +101,6 @@
             [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
         }
     }
-
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
