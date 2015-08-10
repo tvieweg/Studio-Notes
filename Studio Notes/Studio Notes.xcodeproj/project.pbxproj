@@ -24,6 +24,8 @@
 		B1AF94261B61440E002A1903 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1AF94241B61440E002A1903 /* LaunchScreen.xib */; };
 		B1AF94321B61440E002A1903 /* Studio_NotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AF94311B61440E002A1903 /* Studio_NotesTests.m */; };
 		B1AF943D1B61498F002A1903 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AF943C1B61498F002A1903 /* DataSource.m */; };
+		B1F076C21B744E9400FCF7D4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F076C11B744E9400FCF7D4 /* AVFoundation.framework */; };
+		B1F076C41B744EA800FCF7D4 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F076C31B744EA800FCF7D4 /* CoreAudio.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +99,8 @@
 		B1AF94311B61440E002A1903 /* Studio_NotesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Studio_NotesTests.m; sourceTree = "<group>"; };
 		B1AF943B1B61498F002A1903 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
 		B1AF943C1B61498F002A1903 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
+		B1F076C11B744E9400FCF7D4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B1F076C31B744EA800FCF7D4 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1F076C41B744EA800FCF7D4 /* CoreAudio.framework in Frameworks */,
+				B1F076C21B744E9400FCF7D4 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +163,8 @@
 		B1AF94031B61440E002A1903 = {
 			isa = PBXGroup;
 			children = (
+				B1F076C31B744EA800FCF7D4 /* CoreAudio.framework */,
+				B1F076C11B744E9400FCF7D4 /* AVFoundation.framework */,
 				B19BFFAE1B6ACD0300AE61E8 /* Shared DataSource */,
 				B1AF940E1B61440E002A1903 /* Studio Notes */,
 				B14230EF1B6963940059AEF7 /* Share Extension */,

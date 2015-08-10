@@ -43,6 +43,8 @@
     //iCloud setup.
     [[DataSource sharedInstance] addObserver:self forKeyPath:@"iCloudConnectivityDidChange" options:0 context:nil];
     
+    self.tableView.backgroundColor = [UIColor colorWithRed:0/255.0 green:43/255.0 blue:54/255.0 alpha:1.0];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone; 
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
@@ -313,7 +315,12 @@ NSString *const SearchBarIsFirstResponderKey = @"SearchBarIsFirstResponderKey";
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"title"] description];
+    if ([cell isKindOfClass:[StudioNotesSongTableViewCell class]]) {
+        cell = (StudioNotesSongTableViewCell *)cell; 
+        cell.textLabel.text = [[object valueForKey:@"title"] description];
+
+    }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

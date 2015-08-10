@@ -14,9 +14,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *bpmTextField;
 @property (weak, nonatomic) IBOutlet UITextField *songKeyTextField;
-
 @property (strong, nonatomic) UITextView *noteTextView;
 
+@property (assign, nonatomic) BOOL isRecording;
 @property (assign, nonatomic) BOOL viewMovedUp;
 
 @end
@@ -31,22 +31,7 @@
     }
 }
 
-- (void)configureView {
-    // Update the user interface for the detail item.
-    if (self.detailItem) {
-        self.titleTextField.text = [_detailItem valueForKey:@"title"];
-        self.noteTextView.text = [_detailItem valueForKey:@"productionNotes"];
-        self.bpmTextField.text = [_detailItem valueForKey:@"bpm"];
-        self.songKeyTextField.text = [_detailItem valueForKey:@"key"];
-
-        if ([self.noteTextView.text isEqualToString:@""]) {
-            self.noteTextView.text = @"Add notes/lyrics here";
-            self.noteTextView.textColor = [UIColor lightGrayColor]; //optional
-
-        }
-        
-    }
-}
+#pragma mark - View methods
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
@@ -56,24 +41,61 @@
 
 }
 
+- (void)configureView {
+    // Update the user interface for the detail item.
+    if (self.detailItem) {
+        self.titleTextField.text = [_detailItem valueForKey:@"title"];
+        self.noteTextView.text = [_detailItem valueForKey:@"productionNotes"];
+        self.bpmTextField.text = [_detailItem valueForKey:@"bpm"];
+        self.songKeyTextField.text = [_detailItem valueForKey:@"key"];
+        self.audioPlayer = [[AVAudioPlayer alloc] initWithData:[_detailItem valueForKey:@"audioData"] error:nil];
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+        [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+        
+        [self toggleRecordingIcon];
+        
+        if ([self.noteTextView.text isEqualToString:@""]) {
+            self.noteTextView.text = @"Add notes/lyrics here";
+            self.noteTextView.textColor = [UIColor lightGrayColor]; //optional
+            
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.noteTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 250, self.view.frame.size.width, self.view.frame.size.height - 250 - 15)];
-    [self.view addSubview:self.noteTextView];
+    //Audio Recording Setup
+    NSURL *audioFileURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingString:@"audioRecording.m4a"]];
+    NSDictionary *audioSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [NSNumber numberWithFloat:44100],AVSampleRateKey,
+                                   [NSNumber numberWithInt: kAudioFormatAppleLossless],AVFormatIDKey,
+                                   [NSNumber numberWithInt: 1],AVNumberOfChannelsKey,
+                                   [NSNumber numberWithInt:AVAudioQualityMedium],AVEncoderAudioQualityKey,nil];
+    
+    self.audioRecorder = [[AVAudioRecorder alloc]
+                          initWithURL:audioFileURL
+                          settings:audioSettings
+                          error:nil];
     
     // Listen for will show/hide notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
-    // Do any additional setup after loading the view, typically from a nib.
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(didPressShareButton)];
     self.navigationItem.rightBarButtonItem = shareButton;
     
+    //noteTextView setup
+    self.noteTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 280, self.view.frame.size.width, self.view.frame.size.height - 280 - 15)];
+    self.noteTextView.backgroundColor = [UIColor colorWithRed:0/255.0 green:43/255.0 blue:54/255.0 alpha:1.0];
+    self.noteTextView.textColor = [UIColor whiteColor]; 
+    //Add tap gesture recognizer to toggle noteTextView data type recognition and editability.
     UITapGestureRecognizer *noteTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(noteTextRecognizerTapped:)];
     noteTapRecognizer.delegate = self;
     [self.noteTextView addGestureRecognizer:noteTapRecognizer];
+    [self.view addSubview:self.noteTextView];
     
+    //Add tap recognizer to screen to dismiss keyboard.
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDidFire)];
     tap.delegate = self;
     [self.view addGestureRecognizer:tap];
@@ -81,15 +103,14 @@
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
-    //Save notes and return to previous sheet.
     
+    //Save notes and return to previous sheet.
     [self.detailItem setValue:self.titleTextField.text forKey:@"title"];
     [self.detailItem setValue:self.noteTextView.text forKey:@"productionNotes"];
     [self.detailItem setValue:self.bpmTextField.text forKey:@"bpm"];
     [self.detailItem setValue:self.songKeyTextField.text forKey:@"key"];
     
     [[DataSource sharedInstance] saveContext];
-
 }
 
 #pragma mark - Keyboard methods
@@ -99,7 +120,7 @@
     NSDictionary *userInfo = [notification userInfo];
     CGRect keyboardFrame;
     [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardFrame];
-
+    
     if ([self.noteTextView isFirstResponder] && CGRectGetMaxY(self.noteTextView.frame) > self.view.frame.size.height - keyboardFrame.size.height) {
         self.viewMovedUp = YES;
         [self moveToolBarUp:self.viewMovedUp forKeyboardNotification:notification];
@@ -116,7 +137,7 @@
 
 #pragma mark - Tap Gesture Recognizer Methods
 
-- (void) noteTextRecognizerTapped:(UITapGestureRecognizer *) aRecognizer {
+- (void) noteTextRecognizerTapped:(UITapGestureRecognizer *)recognizer {
     self.noteTextView.dataDetectorTypes = UIDataDetectorTypeNone;
     self.noteTextView.editable = YES;
     [self.noteTextView becomeFirstResponder];
@@ -133,7 +154,6 @@
     if (textView == self.noteTextView) {
         if ([textView.text isEqualToString:@"Add production notes here"]) {
             textView.text = @"";
-            textView.textColor = [UIColor blackColor]; //optional
         }
         [textView becomeFirstResponder];
     }
@@ -147,7 +167,6 @@
     if (textView == self.noteTextView) {
         if ([textView.text isEqualToString:@""]) {
             textView.text = @"Add production notes here";
-            textView.textColor = [UIColor lightGrayColor]; //optional
         }
         [textView resignFirstResponder];
     }
@@ -177,9 +196,7 @@
     [self.noteTextView setFrame:newFrame];
     
     [UIView commitAnimations];
-    
 }
-
 
 #pragma mark - Sharing
 
@@ -204,6 +221,61 @@
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
         [self presentViewController:activityVC animated:YES completion:nil];
     }
+}
+
+#pragma mark - Audio recording
+
+- (void)toggleRecordingIcon {
+    if (self.isRecording) {
+        self.recordingImage.hidden = NO;
+    } else {
+        self.recordingImage.hidden = YES;
+    }
+}
+
+- (IBAction)audioRecord:(id)sender {
+    [self.timer invalidate];
+    [self.audioProgress setHidden:YES];
+    
+    self.isRecording = YES;
+    [self toggleRecordingIcon];
+    
+    [self.audioRecorder record];
+}
+
+- (IBAction)audioStop:(id)sender
+{
+    [self.audioPlayer stop];
+    [self.audioRecorder stop];
+    
+    self.isRecording = NO;
+    [self toggleRecordingIcon];
+    
+    NSURL *audioFileURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingString:@"audioRecording.m4a"]];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioFileURL error:nil];
+    
+    //Save it to core data here
+    NSData *audioData = [NSData dataWithContentsOfURL:audioFileURL];
+    [self.detailItem setValue:audioData forKey:@"audioData"];
+
+}
+
+- (IBAction)audioPlay:(id)sender {
+    [self.audioPlayer play];
+    
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.25
+                                                  target:self
+                                                selector:@selector(updateProgress)
+                                                userInfo:nil
+                                                 repeats:YES];
+    [self.audioProgress setHidden:NO];
+}
+
+- (void)updateProgress {
+    float timeLeft = self.audioPlayer.currentTime/self.audioPlayer.duration;
+    
+    // update the UIProgress
+    self.audioProgress.progress= timeLeft;
 }
 
 @end

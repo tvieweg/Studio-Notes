@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H1p-Uh-vWS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Master-->
@@ -37,38 +38,104 @@
                                 <color key="textColor" red="0.99209377590919534" green="1" blue="0.977789395767103" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
+                                        <color key="value" red="0.38431372549019605" green="0.47058823529411764" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BPM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OlN-84-hsz">
-                                <rect key="frame" x="252" y="144" width="97" height="30"/>
+                                <rect key="frame" x="204" y="150" width="97" height="30"/>
                                 <color key="textColor" red="0.99327771740000004" green="1" blue="0.97949140069999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                             </textField>
+                            <button opaque="NO" contentMode="top" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDW-EW-tre">
+                                <rect key="frame" x="176" y="214" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="Amd-Xc-3OE"/>
+                                    <constraint firstAttribute="height" constant="44" id="Iq1-oQ-A0I"/>
+                                </constraints>
+                                <state key="normal" title="Record" image="recording">
+                                    <color key="titleColor" red="0.99209377590000003" green="1" blue="0.97778939580000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="audioRecord:" destination="JEX-9P-axG" eventType="touchUpInside" id="6hd-ZA-PwT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FL-mg-h8O">
+                                <rect key="frame" x="278" y="214" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ElJ-Fu-tyU"/>
+                                    <constraint firstAttribute="width" constant="44" id="ZBr-BY-mzj"/>
+                                </constraints>
+                                <state key="normal" title="Play" image="play">
+                                    <color key="titleColor" red="0.99209377590000003" green="1" blue="0.97778939580000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="audioPlay:" destination="JEX-9P-axG" eventType="touchUpInside" id="AlG-uy-C5X"/>
+                                </connections>
+                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Key" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Xe-CF-8tM">
-                                <rect key="frame" x="252" y="188" width="97" height="30"/>
+                                <rect key="frame" x="298" y="150" width="97" height="30"/>
                                 <color key="textColor" red="0.99327771740000004" green="1" blue="0.97949140069999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hlH-Ry-dQh">
+                                <rect key="frame" x="176" y="200" width="239" height="2"/>
+                            </progressView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="player_record" translatesAutoresizingMaskIntoConstraints="NO" id="04I-Hf-mLb">
+                                <rect key="frame" x="550" y="72" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="YtP-hW-3xK"/>
+                                    <constraint firstAttribute="width" constant="30" id="itJ-iR-DiZ"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XYH-tN-kZM">
+                                <rect key="frame" x="371" y="214" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="Ma8-lD-UrF"/>
+                                    <constraint firstAttribute="height" constant="44" id="NhH-FQ-exb"/>
+                                </constraints>
+                                <state key="normal" title="Stop" image="stop">
+                                    <color key="titleColor" red="0.99209377590000003" green="1" blue="0.97778939580000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="audioStop:" destination="JEX-9P-axG" eventType="touchUpInside" id="VVK-NA-boy"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.3921568627" green="0.3921568627" blue="0.47058823529999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.16862745098039217" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="3Xe-CF-8tM" secondAttribute="centerX" id="Qvm-Dn-6sg"/>
-                            <constraint firstAttribute="centerX" secondItem="OlN-84-hsz" secondAttribute="centerX" id="cHy-zE-nsB"/>
+                            <constraint firstItem="XYH-tN-kZM" firstAttribute="leading" secondItem="6FL-mg-h8O" secondAttribute="trailing" constant="60" id="Cyh-oB-yhR"/>
+                            <constraint firstAttribute="centerX" secondItem="hlH-Ry-dQh" secondAttribute="centerX" id="JRK-8S-Qt1"/>
+                            <constraint firstItem="6FL-mg-h8O" firstAttribute="leading" secondItem="WDW-EW-tre" secondAttribute="trailing" constant="60" id="Jmg-wN-6XX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3Xe-CF-8tM" secondAttribute="trailing" constant="188" id="abR-qo-W10"/>
+                            <constraint firstAttribute="centerX" secondItem="6FL-mg-h8O" secondAttribute="centerX" id="buo-1b-hrs"/>
+                            <constraint firstItem="04I-Hf-mLb" firstAttribute="trailing" secondItem="svH-Pt-448" secondAttribute="trailingMargin" id="gXC-yn-2SS"/>
+                            <constraint firstItem="04I-Hf-mLb" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="8" id="pXb-zA-2hM"/>
+                            <constraint firstItem="hlH-Ry-dQh" firstAttribute="top" secondItem="3Xe-CF-8tM" secondAttribute="bottom" constant="20" id="pum-f8-XO5"/>
+                            <constraint firstItem="OlN-84-hsz" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="188" id="sCs-RZ-HEj"/>
                             <constraint firstAttribute="centerX" secondItem="zda-ib-r0T" secondAttribute="centerX" id="zHa-aG-b4S"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Song" id="mOI-FS-AaM"/>
                     <connections>
+                        <outlet property="audioProgress" destination="hlH-Ry-dQh" id="7TO-9j-4zs"/>
                         <outlet property="bpmTextField" destination="OlN-84-hsz" id="RpE-5x-tYZ"/>
+                        <outlet property="recordingImage" destination="04I-Hf-mLb" id="7E3-SZ-i2p"/>
                         <outlet property="songKeyTextField" destination="3Xe-CF-8tM" id="Oep-j6-eCJ"/>
                         <outlet property="titleTextField" destination="zda-ib-r0T" id="8c4-KN-5i8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="129"/>
+            <point key="canvasLocation" x="628" y="103"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
@@ -143,6 +210,12 @@
             <point key="canvasLocation" x="-45" y="129"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="play" width="2257" height="2257"/>
+        <image name="player_record" width="128" height="128"/>
+        <image name="recording" width="2257" height="2257"/>
+        <image name="stop" width="2257" height="2257"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6S0-TO-JiA"/>
     </inferredMetricsTieBreakers>
