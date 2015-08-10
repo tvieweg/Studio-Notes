@@ -32,8 +32,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zda-ib-r0T">
-                                <rect key="frame" x="252" y="94" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zda-ib-r0T">
+                                <rect key="frame" x="276" y="94" width="48" height="29"/>
                                 <color key="tintColor" red="0.99327771740000004" green="1" blue="0.97949140069999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.99209377590919534" green="1" blue="0.977789395767103" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -44,14 +44,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BPM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OlN-84-hsz">
-                                <rect key="frame" x="204" y="150" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BPM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OlN-84-hsz">
+                                <rect key="frame" x="204" y="149" width="44" height="22"/>
                                 <color key="textColor" red="0.99327771740000004" green="1" blue="0.97949140069999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                             </textField>
-                            <button opaque="NO" contentMode="top" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDW-EW-tre">
-                                <rect key="frame" x="176" y="214" width="44" height="44"/>
+                            <button opaque="NO" contentMode="top" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDW-EW-tre">
+                                <rect key="frame" x="174" y="213" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="Amd-Xc-3OE"/>
                                     <constraint firstAttribute="height" constant="44" id="Iq1-oQ-A0I"/>
@@ -64,8 +64,8 @@
                                     <action selector="audioRecord:" destination="JEX-9P-axG" eventType="touchUpInside" id="6hd-ZA-PwT"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FL-mg-h8O">
-                                <rect key="frame" x="278" y="214" width="44" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FL-mg-h8O">
+                                <rect key="frame" x="278" y="213" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="ElJ-Fu-tyU"/>
                                     <constraint firstAttribute="width" constant="44" id="ZBr-BY-mzj"/>
@@ -78,24 +78,27 @@
                                     <action selector="audioPlay:" destination="JEX-9P-axG" eventType="touchUpInside" id="AlG-uy-C5X"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Key" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Xe-CF-8tM">
-                                <rect key="frame" x="298" y="150" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Key" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Xe-CF-8tM">
+                                <rect key="frame" x="361" y="149" width="35" height="22"/>
                                 <color key="textColor" red="0.99327771740000004" green="1" blue="0.97949140069999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hlH-Ry-dQh">
-                                <rect key="frame" x="176" y="200" width="239" height="2"/>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hlH-Ry-dQh">
+                                <rect key="frame" x="181" y="191" width="239" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="239" id="iFJ-V4-Jr1"/>
+                                </constraints>
                             </progressView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="player_record" translatesAutoresizingMaskIntoConstraints="NO" id="04I-Hf-mLb">
-                                <rect key="frame" x="550" y="72" width="30" height="30"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="player_record" translatesAutoresizingMaskIntoConstraints="NO" id="04I-Hf-mLb">
+                                <rect key="frame" x="554" y="72" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="YtP-hW-3xK"/>
                                     <constraint firstAttribute="width" constant="30" id="itJ-iR-DiZ"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XYH-tN-kZM">
-                                <rect key="frame" x="371" y="214" width="44" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XYH-tN-kZM">
+                                <rect key="frame" x="382" y="213" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="Ma8-lD-UrF"/>
                                     <constraint firstAttribute="height" constant="44" id="NhH-FQ-exb"/>
@@ -111,15 +114,22 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.16862745098039217" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="hlH-Ry-dQh" secondAttribute="centerX" id="0Xw-48-yML"/>
                             <constraint firstItem="XYH-tN-kZM" firstAttribute="leading" secondItem="6FL-mg-h8O" secondAttribute="trailing" constant="60" id="Cyh-oB-yhR"/>
                             <constraint firstAttribute="centerX" secondItem="hlH-Ry-dQh" secondAttribute="centerX" id="JRK-8S-Qt1"/>
                             <constraint firstItem="6FL-mg-h8O" firstAttribute="leading" secondItem="WDW-EW-tre" secondAttribute="trailing" constant="60" id="Jmg-wN-6XX"/>
+                            <constraint firstItem="3Xe-CF-8tM" firstAttribute="top" secondItem="zda-ib-r0T" secondAttribute="bottom" constant="26" id="PUV-vi-VXK"/>
+                            <constraint firstItem="XYH-tN-kZM" firstAttribute="top" secondItem="WDW-EW-tre" secondAttribute="top" id="TmH-8d-dbt"/>
+                            <constraint firstItem="XYH-tN-kZM" firstAttribute="top" secondItem="6FL-mg-h8O" secondAttribute="top" id="WsR-zD-2Fs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3Xe-CF-8tM" secondAttribute="trailing" constant="188" id="abR-qo-W10"/>
                             <constraint firstAttribute="centerX" secondItem="6FL-mg-h8O" secondAttribute="centerX" id="buo-1b-hrs"/>
                             <constraint firstItem="04I-Hf-mLb" firstAttribute="trailing" secondItem="svH-Pt-448" secondAttribute="trailingMargin" id="gXC-yn-2SS"/>
+                            <constraint firstItem="zda-ib-r0T" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="30" id="nNo-QI-XoW"/>
                             <constraint firstItem="04I-Hf-mLb" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="8" id="pXb-zA-2hM"/>
                             <constraint firstItem="hlH-Ry-dQh" firstAttribute="top" secondItem="3Xe-CF-8tM" secondAttribute="bottom" constant="20" id="pum-f8-XO5"/>
+                            <constraint firstItem="6FL-mg-h8O" firstAttribute="top" secondItem="hlH-Ry-dQh" secondAttribute="bottom" constant="20" id="r5J-UN-R9K"/>
                             <constraint firstItem="OlN-84-hsz" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="188" id="sCs-RZ-HEj"/>
+                            <constraint firstItem="OlN-84-hsz" firstAttribute="top" secondItem="3Xe-CF-8tM" secondAttribute="top" id="yBS-Am-juf"/>
                             <constraint firstAttribute="centerX" secondItem="zda-ib-r0T" secondAttribute="centerX" id="zHa-aG-b4S"/>
                         </constraints>
                     </view>

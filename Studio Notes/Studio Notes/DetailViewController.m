@@ -78,6 +78,14 @@
                           settings:audioSettings
                           error:nil];
     
+    UIColor *placeholderTextColor = [UIColor colorWithRed:88/255.0 green:110/255.0 blue:117/255.0 alpha:1.0];
+    
+    NSAttributedString *bpmPlaceholder = [[NSAttributedString alloc] initWithString:@"BPM" attributes:@{ NSForegroundColorAttributeName : placeholderTextColor}];
+    self.bpmTextField.attributedPlaceholder = bpmPlaceholder;
+    
+    NSAttributedString *keyPlaceholder = [[NSAttributedString alloc] initWithString:@"Key" attributes:@{ NSForegroundColorAttributeName : placeholderTextColor}];
+    self.songKeyTextField.attributedPlaceholder = keyPlaceholder;
+    
     // Listen for will show/hide notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -88,7 +96,7 @@
     //noteTextView setup
     self.noteTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 280, self.view.frame.size.width, self.view.frame.size.height - 280 - 15)];
     self.noteTextView.backgroundColor = [UIColor colorWithRed:0/255.0 green:43/255.0 blue:54/255.0 alpha:1.0];
-    self.noteTextView.textColor = [UIColor whiteColor]; 
+    self.noteTextView.textColor = [UIColor whiteColor];
     //Add tap gesture recognizer to toggle noteTextView data type recognition and editability.
     UITapGestureRecognizer *noteTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(noteTextRecognizerTapped:)];
     noteTapRecognizer.delegate = self;
