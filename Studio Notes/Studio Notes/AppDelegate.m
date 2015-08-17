@@ -11,7 +11,9 @@
 #import "MasterViewController.h"
 #import "DataSource.h"
 
-@interface AppDelegate () <UISplitViewControllerDelegate>
+@interface AppDelegate () <UISplitViewControllerDelegate, UIAlertViewDelegate>
+
+@property (strong, nonatomic) id currentiCloudToken;
 
 @end
 
@@ -24,11 +26,34 @@
     UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
     navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
     splitViewController.delegate = self;
-
+    
+    
+    //iCloud setup
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    self.currentiCloudToken = fileManager.ubiquityIdentityToken;
+    
+    NSLog(@"%@", self.currentiCloudToken);
+    
+    if (self.currentiCloudToken) {
+        NSData *newTokenData =
+        [NSKeyedArchiver archivedDataWithRootObject: self.currentiCloudToken];
+        [[NSUserDefaults standardUserDefaults]
+         setObject: newTokenData
+         forKey: @"com.trevorvieweg.Studio-Notes.UbiquityIdentityToken"];
+    } else {
+        [[NSUserDefaults standardUserDefaults]
+         removeObjectForKey: @"com.trevorvieweg.Studio-Notes.UbiquityIdentityToken"];
+    }
+    
     UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
     MasterViewController *controller = (MasterViewController *)masterNavigationController.topViewController;
     controller.managedObjectContext = [DataSource sharedInstance].managedObjectContext;
+
     return YES;
+}
+
+- (void) iCloudAccountAvailabilityChanged:(NSNotification *)ubiquityNotification {
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -47,6 +72,35 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"hasLaunchedOnce"])
+    {
+        NSLog(@"Existing user");
+    }
+    
+    else
+    {
+        if (self.currentiCloudToken)
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLaunchedOnce"];
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Choose Storage Option", @"Storage Option Title") message:NSLocalizedString(@"Should notes be stored in iCloud and available on all of your devices?", @"Storage Option Message") preferredStyle:UIAlertControllerStyleActionSheet];
+            
+            UIAlertAction *iCloudEnabled = [UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", @"Yes Option") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSLog(@"YES CLICKED");
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"iCloudSetting"];
+                [[DataSource sharedInstance] setPersistentStore];
+            }];
+            
+            UIAlertAction *iCloudDisabled = [UIAlertAction actionWithTitle:NSLocalizedString(@"No", @"No Option") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSLog(@"NO CLICKED");
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"iCloudSetting"];
+            }];
+            
+            [alert addAction:iCloudEnabled];
+            [alert addAction:iCloudDisabled];
+            [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
+        }
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
